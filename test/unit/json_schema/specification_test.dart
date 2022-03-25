@@ -62,9 +62,11 @@ void main() {
   final allDraft2020 =
       specificationTests.entries.where((MapEntry<String, String> entry) => entry.key.startsWith('/draft2020-12'));
 
-  final runAllTestsForDraftX = (SchemaVersion schemaVersion, Iterable<MapEntry<String, String>> allTests,
-      List<String> skipFiles, List<String> skipTests,
-      {bool isSync = false, bool validateFormats, RefProvider refProvider}) {
+  final Null Function(SchemaVersion, Iterable<MapEntry<String, String>>, List<String>, List<String>,
+          {bool isSync, RefProvider<dynamic> refProvider, bool validateFormats}) runAllTestsForDraftX =
+      (SchemaVersion schemaVersion, Iterable<MapEntry<String, String>> allTests, List<String> skipFiles,
+          List<String> skipTests,
+          {bool isSync = false, bool? validateFormats, RefProvider? refProvider}) {
     String shortSchemaVersion = schemaVersion.toString();
     if (schemaVersion == SchemaVersion.draft4) {
       shortSchemaVersion = 'draft4';
@@ -79,65 +81,67 @@ void main() {
     }
 
     allTests.forEach((testEntry) {
-      if (testEntry is MapEntry) {
-        final checkResult = (List<ValidationError> validationResults, bool expectedResult) {
-          if (validationResults.isEmpty != expectedResult && expectedResult == true) {
-            validationResults.forEach((error) {
-              print(error);
-            });
-          }
-          expect(validationResults.isEmpty, expectedResult);
-        };
+      final checkResult = (List<ValidationError> validationResults, bool? expectedResult) {
+        if (validationResults.isEmpty != expectedResult && expectedResult == true) {
+          validationResults.forEach((error) {
+            print(error);
+          });
+        }
+        expect(validationResults.isEmpty, expectedResult);
+      };
 
-        group('Validations ($shortSchemaVersion) ${path.basename(testEntry.key)}', () {
-          // Skip these for now - reason shown.
-          if (skipFiles.contains(path.basename(testEntry.key))) return;
+      group('Validations ($shortSchemaVersion) ${path.basename(testEntry.key)}', () {
+        // Skip these for now - reason shown.
+        if (skipFiles.contains(path.basename(testEntry.key))) return;
 
-          final List tests = json.decode(testEntry.value);
-          tests.forEach((testEntry) {
-            final schemaData = testEntry['schema'];
-            final description = testEntry['description'];
-            final List validationTests = testEntry['tests'];
+        final List tests = json.decode(testEntry.value);
+        tests.forEach((testEntry) {
+          final schemaData = testEntry['schema'];
+          final description = testEntry['description'];
+          final List validationTests = testEntry['tests'];
 
-            validationTests.forEach((validationTest) {
-              final String validationDescription = validationTest['description'];
-              final String testName = '${description} : ${validationDescription}';
+          validationTests.forEach((validationTest) {
+            final String? validationDescription = validationTest['description'];
+            final String testName = '${description} : ${validationDescription}';
 
-              // Individual test cases to skip - reason listed in comments.
-              if (skipTests.contains(testName)) return;
+            // Individual test cases to skip - reason listed in comments.
+            if (skipTests.contains(testName)) return;
 
-              test(testName, () {
-                final instance = validationTest['data'];
-                ValidationResults validationResults;
-                final bool expectedResult = validationTest['valid'];
+            test(testName, () {
+              final instance = validationTest['data'];
+              ValidationResults? validationResults;
+              final bool? expectedResult = validationTest['valid'];
 
-                if (isSync) {
-                  final schema = JsonSchema.create(
-                    schemaData,
-                    schemaVersion: schemaVersion,
-                    refProvider: refProvider,
-                  );
+              if (isSync) {
+                final schema = JsonSchema.create(
+                  schemaData,
+                  schemaVersion: schemaVersion,
+                  refProvider: refProvider,
+                );
+                validationResults = schema.validate(instance, validateFormats: validateFormats);
+                expect(validationResults.isValid, expectedResult);
+              } else {
+                final checkResultAsync = expectAsync2(checkResult);
+                JsonSchema.createAsync(schemaData, schemaVersion: schemaVersion, refProvider: refProvider)
+                    .then((schema) {
                   validationResults = schema.validate(instance, validateFormats: validateFormats);
-                  expect(validationResults.isValid, expectedResult);
-                } else {
-                  final checkResultAsync = expectAsync2(checkResult);
-                  JsonSchema.createAsync(schemaData, schemaVersion: schemaVersion, refProvider: refProvider)
-                      .then((schema) {
-                    validationResults = schema.validate(instance, validateFormats: validateFormats);
-                    checkResultAsync(validationResults.errors, expectedResult);
-                  });
-                }
-              });
+                  checkResultAsync(validationResults!.errors, expectedResult);
+                });
+              }
             });
           });
         });
-      }
+      });
     });
   };
 
   // Mock Ref Provider for refRemote tests. Emulates what createFromUrl would return.
   final RefProvider syncRefProvider = RefProvider.sync((String ref) {
-    return json.decode(specificationRemotes[ref]);
+    final specificationRemote = specificationRemotes[ref];
+    if (specificationRemote == null) {
+      throw StateError("Encountered missing specificationRemote");
+    }
+    return json.decode(specificationRemote);
   });
 
   final RefProvider asyncRefProvider = RefProvider.async((String ref) async {

@@ -18,13 +18,13 @@ class IoSchemaUrlClient extends SchemaUrlClient {
   @override
   createFromUrl(
     String schemaUrl, {
-    SchemaVersion schemaVersion,
-    List<CustomVocabulary> customVocabularies,
-    Map<String, ValidationContext Function(ValidationContext context, String instanceData)> customFormats = const {},
+    SchemaVersion? schemaVersion,
+    List<CustomVocabulary>? customVocabularies,
+    Map<String, ValidationContext Function(ValidationContext context, String? instanceData)> customFormats = const {},
   }) async {
     final uriWithFrag = Uri.parse(schemaUrl);
     final uri = schemaUrl.endsWith('#') ? uriWithFrag : uriWithFrag.removeFragment();
-    Map schemaMap;
+    Map<String, dynamic>? schemaMap;
     if (uri.scheme == 'http' || uri.scheme == 'https') {
       // Setup the HTTP request.
       _logger.info('GET\'ing Schema from URL: $uri');
@@ -57,10 +57,10 @@ class IoSchemaUrlClient extends SchemaUrlClient {
   }
 
   @override
-  Future<Map<String, dynamic>> getSchemaJsonFromUrl(String schemaUrl) async {
+  Future<Map<String, dynamic>?> getSchemaJsonFromUrl(String schemaUrl) async {
     final uriWithFrag = Uri.parse(schemaUrl);
     final uri = schemaUrl.endsWith('#') ? uriWithFrag : uriWithFrag.removeFragment();
-    Map schemaMap;
+    Map<String, dynamic>? schemaMap;
     if (uri.scheme == 'http' || uri.scheme == 'https') {
       // Setup the HTTP request.
       _logger.info('GET\'ing Schema JSON from URL: $uri');
@@ -83,7 +83,7 @@ class IoSchemaUrlClient extends SchemaUrlClient {
     // HTTP servers ignore fragments, so resolve a sub-map if a fragment was specified.
     var subSchema;
     try {
-      subSchema = JsonPointer(uriWithFrag.fragment)?.read(schemaMap);
+      subSchema = JsonPointer(uriWithFrag.fragment).read(schemaMap);
     } catch (_) {
       // Do nothing if we fail to decode or read the pointer.
     }
