@@ -666,8 +666,7 @@ class JsonSchema {
     return null;
   }
 
-  JsonSchema _recursiveResolvePath(
-      Uri pathUri, List<String> fragments, JsonSchema baseSchema, Set<Uri> refsEncountered,
+  JsonSchema _recursiveResolvePath(Uri pathUri, List<String> fragments, JsonSchema baseSchema, Set<Uri> refsEncountered,
       {bool skipInitialRefCheck = false}) {
     // Set of properties that are ignored when set beside a `$ref`.
     final Set<String> consts = Set.of([r'$id', r'$schema', r'$comment']);
