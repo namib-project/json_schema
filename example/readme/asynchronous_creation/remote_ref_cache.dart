@@ -41,7 +41,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:json_schema/json_schema.dart';
+import 'package:json_schema3/json_schema.dart';
 
 main() async {
   final referencedSchema = {

@@ -1,5 +1,5 @@
-import 'package:json_schema/src/json_schema/models/schema_version.dart';
-import 'package:json_schema/src/json_schema/models/validation_context.dart';
+import 'package:json_schema3/src/json_schema/models/schema_version.dart';
+import 'package:json_schema3/src/json_schema/models/validation_context.dart';
 import 'package:rfc_6901/rfc_6901.dart';
 
 ValidationContext defaultJsonPointerValidator(ValidationContext context, String instanceData) {
