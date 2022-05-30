@@ -1,4 +1,4 @@
-import 'package:json_schema/src/json_schema/models/validation_context.dart';
+import 'package:json_schema3/src/json_schema/models/validation_context.dart';
 
 ValidationContext defaultIpv6Validator(ValidationContext context, String instanceData) {
   try {

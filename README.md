@@ -1,6 +1,10 @@
-# JSON Schema
+# JSON Schema 3
 
   A *platform agnostic* (web, flutter or vm) Dart library for validating JSON instances against JSON Schemas (multi-version support with latest of Draft 7).
+
+This is a fork with sound null safety of the latest version of `json_schema`.
+Once `json_schema` is updated with sound null safety, this package will be
+marked as discontinued.
 
 ## Getting Started
 
