@@ -36,7 +36,7 @@
 //     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //     THE SOFTWARE.
 
-import 'package:json_schema3/json_schema.dart';
+import 'package:json_schema3/json_schema3.dart';
 import 'package:json_schema3/src/json_schema/utils/utils.dart';
 
 /// Default validators for all [JsonSchema]s.

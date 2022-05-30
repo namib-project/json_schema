@@ -39,7 +39,7 @@
 
 import 'dart:io';
 
-import 'package:json_schema3/json_schema.dart';
+import 'package:json_schema3/json_schema3.dart';
 
 main() async {
   final url = "https://raw.githubusercontent.com/json-schema-org/JSON-Schema-Test-Suite/master/remotes/integer.json";

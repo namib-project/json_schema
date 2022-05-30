@@ -39,7 +39,7 @@
 
 import 'dart:convert';
 
-import 'package:json_schema3/json_schema.dart';
+import 'package:json_schema3/json_schema3.dart';
 
 main() {
   //////////////////////////////////////////////////////////////////////

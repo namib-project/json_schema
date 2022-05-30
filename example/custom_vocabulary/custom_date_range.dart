@@ -37,7 +37,7 @@
 //     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //     THE SOFTWARE
 
-import 'package:json_schema3/json_schema.dart';
+import 'package:json_schema3/json_schema3.dart';
 
 main() async {
   // The meta-schema is pulled in while processing the schema.

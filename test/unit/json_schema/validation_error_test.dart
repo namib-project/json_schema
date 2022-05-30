@@ -1,7 +1,7 @@
 // This test suite verifies that validation errors report correct values for
 // instance & schema paths.
 
-import 'package:json_schema3/json_schema.dart';
+import 'package:json_schema3/json_schema3.dart';
 import 'package:test/test.dart';
 
 JsonSchema createObjectSchema(Map<String, dynamic> nestedSchema) {

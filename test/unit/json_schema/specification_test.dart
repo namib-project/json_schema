@@ -42,7 +42,7 @@ import 'package:json_schema3/src/json_schema/models/validation_results.dart';
 import 'package:path/path.dart' as path;
 import 'package:test/test.dart';
 
-import 'package:json_schema3/json_schema.dart';
+import 'package:json_schema3/json_schema3.dart';
 
 import '../constants.dart';
 import '../specification_remotes.dart';
