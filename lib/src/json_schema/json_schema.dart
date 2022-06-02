@@ -346,9 +346,7 @@ class JsonSchema {
     } else if (_root.schemaVersion == SchemaVersion.draft6) {
       accessMap = _accessMapV6;
     } else if (_root.schemaVersion >= SchemaVersion.draft2019_09) {
-      final vocabMap = Map()
-        ..addAll(_vocabMaps)
-        ..addAll(_customVocabMap);
+      final vocabMap = Map()..addAll(_vocabMaps)..addAll(_customVocabMap);
       this.metaschemaVocabulary.keys.forEach((vocabUri) {
         accessMap.addAll(vocabMap[vocabUri.toString()]);
       });
@@ -595,7 +593,7 @@ class JsonSchema {
     // Follow JSON Pointer path of fragments if provided.
     if (pathUri.fragment.isNotEmpty) {
       final List<String> fragments = Uri.parse(pathUri.fragment).pathSegments;
-      final foundSchema = _recursiveResolvePath(pathUri, fragments, baseSchema, refsEncountered);
+      final foundSchema = _recursiveResolvePath(pathUri, fragments.sublist(0), baseSchema, refsEncountered);
       _memomizedResults[currentPair] = foundSchema;
       return foundSchema;
     }
@@ -761,7 +759,7 @@ class JsonSchema {
           // If currentSchema has additional values, then traverse both paths to find the result.
           if (i + 1 < fragments.length && currentSchema._schemaMap.keys.toSet().difference(consts).length > 1) {
             return _resolveParallelPaths(
-                pathUri, fragments.sublist(i, fragments.length - 1), currentSchema, refsEncountered);
+                pathUri, fragments.sublist(i + 1, fragments.length), currentSchema, refsEncountered);
           }
 
           currentSchema = _resolveSchemaWithAccounting(pathUri, currentSchema, refsEncountered);
