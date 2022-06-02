@@ -346,7 +346,9 @@ class JsonSchema {
     } else if (_root.schemaVersion == SchemaVersion.draft6) {
       accessMap = _accessMapV6;
     } else if (_root.schemaVersion >= SchemaVersion.draft2019_09) {
-      final vocabMap = Map()..addAll(_vocabMaps)..addAll(_customVocabMap);
+      final vocabMap = Map()
+        ..addAll(_vocabMaps)
+        ..addAll(_customVocabMap);
       this.metaschemaVocabulary.keys.forEach((vocabUri) {
         accessMap.addAll(vocabMap[vocabUri.toString()]);
       });
