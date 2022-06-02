@@ -593,7 +593,7 @@ class JsonSchema {
     // Follow JSON Pointer path of fragments if provided.
     if (pathUri.fragment.isNotEmpty) {
       final List<String> fragments = Uri.parse(pathUri.fragment).pathSegments;
-      final foundSchema = _recursiveResolvePath(pathUri, fragments.sublist(0), baseSchema, refsEncountered);
+      final foundSchema = _recursiveResolvePath(pathUri, fragments, baseSchema, refsEncountered);
       _memomizedResults[currentPair] = foundSchema;
       return foundSchema;
     }
