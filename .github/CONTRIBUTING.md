@@ -26,7 +26,7 @@ __ALWAYS__ adhere to the [Dart Style Guide].  _Please take the time to read it i
 ### General formatting guidelines
 
 + __AVOID__ lines longer than 120 characters.
-+ __AVOID__ using `dartfmt` as an excuse to ignore good judgement about
++ __AVOID__ using `dart format` as an excuse to ignore good judgement about
   whether your code is readable and approachable by others.
 
 &nbsp;
@@ -176,7 +176,7 @@ The `json_schema` developer workflow couldn't be any more simple!
 When you're ready to run the tests... run:
 
 ```bash
-pub run dart_dev test
+dart run dart_dev test
 ```
 
 

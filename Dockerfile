@@ -21,6 +21,6 @@ WORKDIR /build/
 COPY . /build/
 
 
-RUN timeout 5m pub get
+RUN timeout 5m dart pub get
 
 FROM scratch
