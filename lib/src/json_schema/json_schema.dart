@@ -607,7 +607,7 @@ class JsonSchema {
   // When there are 2 possible path to be resolve, traverse both paths.
   JsonSchema _resolveParallelPaths(
     Uri pathUri, // The path being resolved
-    List<String> fragments, // A slice of fragments being traversed.
+    List<String> fragments, // A list of fragments being traversed.
     JsonSchema schemaWithRef, // A JsonSchema containing a ref.
     Set<Uri> refsEncountered, // Refs encountered from schemaWithRef
   ) {
