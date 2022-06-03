@@ -595,7 +595,7 @@ class JsonSchema {
     // Follow JSON Pointer path of fragments if provided.
     if (pathUri.fragment.isNotEmpty) {
       final List<String> fragments = Uri.parse(pathUri.fragment).pathSegments;
-      final foundSchema = _recursiveResolvePath(pathUri, fragments.slice(0), baseSchema, refsEncountered);
+      final foundSchema = _recursiveResolvePath(pathUri, fragments, baseSchema, refsEncountered);
       _memomizedResults[currentPair] = foundSchema;
       return foundSchema;
     }
@@ -607,7 +607,7 @@ class JsonSchema {
   // When there are 2 possible path to be resolve, traverse both paths.
   JsonSchema _resolveParallelPaths(
     Uri pathUri, // The path being resolved
-    ListSlice<String> fragments, // A slice of fragments being traversed.
+    List<String> fragments, // A list of fragments being traversed.
     JsonSchema schemaWithRef, // A JsonSchema containing a ref.
     Set<Uri> refsEncountered, // Refs encountered from schemaWithRef
   ) {
@@ -666,8 +666,7 @@ class JsonSchema {
     return null;
   }
 
-  JsonSchema _recursiveResolvePath(
-      Uri pathUri, ListSlice<String> fragments, JsonSchema baseSchema, Set<Uri> refsEncountered,
+  JsonSchema _recursiveResolvePath(Uri pathUri, List<String> fragments, JsonSchema baseSchema, Set<Uri> refsEncountered,
       {bool skipInitialRefCheck = false}) {
     // Set of properties that are ignored when set beside a `$ref`.
     final Set<String> consts = Set.of([r'$id', r'$schema', r'$comment']);
@@ -762,7 +761,7 @@ class JsonSchema {
           // If currentSchema has additional values, then traverse both paths to find the result.
           if (i + 1 < fragments.length && currentSchema._schemaMap.keys.toSet().difference(consts).length > 1) {
             return _resolveParallelPaths(
-                pathUri, fragments.slice(i, fragments.length - 1), currentSchema, refsEncountered);
+                pathUri, fragments.sublist(i + 1, fragments.length), currentSchema, refsEncountered);
           }
 
           currentSchema = _resolveSchemaWithAccounting(pathUri, currentSchema, refsEncountered);
