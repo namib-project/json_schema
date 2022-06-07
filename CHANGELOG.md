@@ -1,3 +1,9 @@
+## 4.0.3
+- Remove usages of `.slice` to help downstream packages work around [a dart2js compiler bug](https://github.com/dart-lang/sdk/issues/48762#issuecomment-1139932469)
+
+## 4.0.2
+- Fix bug where `type` getter would throw when `typeList` was null
+
 ## 4.0.1
 - Performance:
   - cache calls to `resolvePath`
