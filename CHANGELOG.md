@@ -1,3 +1,7 @@
+## 5.0.0-rc1
+- Bump minimum Dart SDK version to 2.12.0
+- Migration to null safety
+
 ## 4.0.3
 - Remove usages of `.slice` to help downstream packages work around [a dart2js compiler bug](https://github.com/dart-lang/sdk/issues/48762#issuecomment-1139932469)
 
