@@ -526,7 +526,6 @@ class Validator {
 
       schema.patternProperties.forEach((regex, patternSchema) {
         if (regex.hasMatch(k)) {
-          assert(patternSchema != null);
           _validate(patternSchema, newInstance);
           propCovered = true;
         }
