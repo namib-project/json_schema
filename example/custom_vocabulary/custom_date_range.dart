@@ -68,9 +68,9 @@ main() async {
 
 // Function used to set a date from the schema.
 // The Object returned here is passed into the validators as the `schemaProperty`
-Object _dateSetter(JsonSchema s, Object value) {
+Object _dateSetter(JsonSchema s, Object? value) {
   try {
-    return DateTime.parse(value);
+    return DateTime.parse(value as String);
   } catch (e) {
     throw FormatException("value must parse as a date: ${value}");
   }
@@ -81,11 +81,11 @@ ValidationContext _validateMinDate(ValidationContext context, Object schemaPrope
   if (schemaProperty is! DateTime) {
     context.addError('schema is not a date time object.');
   }
-  DateTime minDate = schemaProperty;
+  DateTime minDate = schemaProperty as DateTime;
   if (instanceData is! String) {
     context.addError('Data is not stringy');
   }
-  String instanceString = instanceData;
+  String instanceString = instanceData as String;
   try {
     var testDate = DateTime.parse(instanceString);
     if (minDate.isAfter(testDate)) {
@@ -103,11 +103,11 @@ ValidationContext _validateMaxDate(ValidationContext context, Object schemaPrope
   if (schemaProperty is! DateTime) {
     context.addError('schema is not a date time object.');
   }
-  DateTime maxDate = schemaProperty;
+  DateTime maxDate = schemaProperty as DateTime;
   if (instanceData is! String) {
     context.addError('Data is not stringy');
   }
-  String instanceString = instanceData;
+  String instanceString = instanceData as String;
   try {
     var testDate = DateTime.parse(instanceString);
     if (maxDate.isBefore(testDate)) {

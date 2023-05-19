@@ -78,21 +78,21 @@ final _staticSchemaMapping = {
   parseStandardizedUri("https://json-schema.org/draft/2020-12/vocab/content"): Draft2020Subschemas.content,
 };
 
-Uri parseStandardizedUri(String s) => standardizeUri(Uri.parse(s));
+Uri? parseStandardizedUri(String s) => standardizeUri(Uri.parse(s));
 
-Uri standardizeUri(Uri uri) => uri?.replace(scheme: uri.scheme == "http" ? "https" : uri.scheme, fragment: null);
+Uri? standardizeUri(Uri? uri) => uri?.replace(scheme: uri.scheme == "http" ? "https" : uri.scheme, fragment: null);
 
-Map getStaticSchema(String ref) {
+Map? getStaticSchema(String ref) {
   return getStaticSchemaByURI(parseStandardizedUri(ref));
 }
 
-Map getStaticSchemaByURI(Uri ref) {
-  if (ref.fragment != "") return null;
+Map? getStaticSchemaByURI(Uri? ref) {
+  if (ref?.fragment.isNotEmpty == true) return null;
   final mapped = _staticSchemaMapping[standardizeUri(ref)];
   return mapped != null ? json.decode(mapped) : null;
 }
 
-Map getStaticSchemaByVersion(SchemaVersion version) {
+Map? getStaticSchemaByVersion(SchemaVersion? version) {
   return getStaticSchema(version.toString());
 }
 
@@ -693,11 +693,11 @@ class JsonSchemaDefinitions {
       '''
       "vocab-core": ${Draft2020Subschemas.core},
       "vocab-applicator": ${Draft2020Subschemas.applicator},
-      "vocab-unevaluated": ${Draft2020Subschemas.unevaluated}, 
+      "vocab-unevaluated": ${Draft2020Subschemas.unevaluated},
       "vocab-validation": ${Draft2020Subschemas.validation},
       "vocab-meta-data": ${Draft2020Subschemas.metadata},
       "vocab-format-annotation": ${Draft2020Subschemas.format_annotation},
-      "vocab-content": ${Draft2020Subschemas.content} 
+      "vocab-content": ${Draft2020Subschemas.content}
     }
 }''';
 }

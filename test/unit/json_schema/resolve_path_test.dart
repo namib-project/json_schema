@@ -2,7 +2,7 @@ import 'package:json_schema/json_schema.dart';
 import 'package:test/test.dart';
 
 main() {
-  JsonSchema testSchema;
+  late JsonSchema testSchema;
   setUp(() {
     testSchema = JsonSchema.create({
       '\$id': 'root',

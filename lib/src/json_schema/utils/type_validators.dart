@@ -5,18 +5,18 @@ import 'package:json_schema/src/json_schema/models/schema_type.dart';
 import 'package:json_schema/src/json_schema/models/schema_version.dart';
 
 class TypeValidators {
-  static List list(String key, Object value) {
+  static List list(String key, dynamic value) {
     if (value is List) return value;
     throw FormatExceptions.list(key, value);
   }
 
-  static List nonEmptyList(String key, Object value) {
+  static List nonEmptyList(String key, dynamic value) {
     final List theList = list(key, value);
     if (theList.isNotEmpty) return theList;
     throw FormatExceptions.error('$key must be a non-empty list: $value');
   }
 
-  static List uniqueList(String key, Object value) {
+  static List uniqueList(String key, dynamic value) {
     int i = 0;
     final List enumValues = TypeValidators.nonEmptyList(key, value);
     enumValues.forEach((v) {
@@ -30,19 +30,19 @@ class TypeValidators {
   }
 
   /// Validate a dynamic value is a String.
-  static String string(String key, Object value) {
+  static String string(String key, Object? value) {
     if (value is String) return value;
     throw FormatExceptions.string(key, value);
   }
 
-  static String nonEmptyString(String key, Object value) {
+  static String nonEmptyString(String key, Object? value) {
     var stringValue = TypeValidators.string(key, value);
     if (stringValue.isNotEmpty) return stringValue;
     throw FormatExceptions.error('$key must be a non-empty string: $value');
   }
 
-  static List<SchemaType> typeList(String key, Object value) {
-    var typeList;
+  static List<SchemaType?> typeList(String key, Object value) {
+    List<SchemaType?> typeList;
     if (value is String) {
       typeList = [SchemaType.fromString(value)];
     } else if (value is List) {
@@ -50,7 +50,9 @@ class TypeValidators {
     } else {
       throw FormatExceptions.error('$key must be string or array: ${value.runtimeType}');
     }
-    if (!typeList.contains(null)) return typeList;
+    if (!typeList.contains(null)) {
+      return typeList;
+    }
     throw FormatExceptions.error('$key(s) invalid $value');
   }
 
@@ -87,7 +89,7 @@ class TypeValidators {
 
   static SchemaVersion builtInSchemaVersion(String key, Object value) {
     string(key, value);
-    final schemaVersion = SchemaVersion.fromString(value);
+    final schemaVersion = SchemaVersion.fromString(value as String?);
     if (schemaVersion != null) {
       return schemaVersion;
     }

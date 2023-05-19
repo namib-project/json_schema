@@ -53,7 +53,7 @@ class CustomKeyword {
   CustomKeyword(this.propertySetter, this.validator);
 
   /// Function used to set a property from the a schema.
-  final Object Function(JsonSchema schema, Object value) propertySetter;
+  final Object Function(JsonSchema schema, Object? value) propertySetter;
 
   /// Function used to validate a json value.
   final ValidationContext Function(ValidationContext context, Object schemaProperty, Object instanceData) validator;

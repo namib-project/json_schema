@@ -4,7 +4,7 @@ import 'package:json_schema/src/json_schema/models/validation_context.dart';
 
 ValidationContext defaultUriReferenceValidator(ValidationContext context, String instanceData) {
   if (context.schemaVersion < SchemaVersion.draft6) return context;
-  final isValid = defaultValidators.uriReferenceValidator ?? (_) => false;
+  final isValid = defaultValidators.uriReferenceValidator;
 
   if (!isValid(instanceData)) {
     context.addError('"uri-reference" format not accepted $instanceData');

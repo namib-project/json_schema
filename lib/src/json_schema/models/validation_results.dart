@@ -41,8 +41,8 @@ import 'package:json_schema/src/json_schema/validator.dart';
 /// The result of validating data against a schema
 class ValidationResults {
   ValidationResults(List<ValidationError> errors, List<ValidationError> warnings)
-      : errors = List.of(errors ?? []),
-        warnings = List.of(warnings ?? []);
+      : errors = List.of(errors),
+        warnings = List.of(warnings);
 
   /// Correctness issues discovered by validation.
   final List<ValidationError> errors;
