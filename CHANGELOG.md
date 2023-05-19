@@ -1,4 +1,4 @@
-## 5.0.0-rc1
+## 5.0.0
 - Bump minimum Dart SDK version to 2.12.0
 - Migration to null safety
 
