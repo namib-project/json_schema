@@ -1,3 +1,5 @@
+## 5.0.1
+- Clean up pubspec, add .pubignore
 ## 5.0.0
 - Bump minimum Dart SDK version to 2.12.0
 - Migration to null safety
